@@ -2,11 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
 
 import './EmployeeListPage.css'
 import { setSelectedRowData } from '../../AC/table'
-
 
 class EmployeeListPage extends React.Component {
   onRowClickHandler = (record) => {
@@ -29,15 +28,37 @@ class EmployeeListPage extends React.Component {
       dataIndex: 'name',
       key: 'name',
       align: 'center',
-      width: '240px',
-      minWidth: '240px',
+      width: '220px',
+      minWidth: '220px',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      sortDirections: ['descend', 'ascend'],
       render: text => <Link to={'/edit_employee'}>{text}</Link>,
     }, {
       title: 'Должность',
       dataIndex: 'role',
       key: 'role',
       align: 'center',
-      // render: v => <span>{v.toString()}</span>
+      filters:[{
+        text:'driver',
+        value:'driver'
+      }, {
+        text:'waiter',
+        value:'waiter'
+      }, {
+        text:'cook',
+        value:'cook'
+      }, {
+        text: 'archive',
+        value: 'archive',
+        children: [{
+          text: 'Yes',
+          value: 'true',
+        }, {
+          text: 'No',
+          value: 'False',
+        }],
+      }],
+      onFilter: (value, record) => record.role.indexOf(value) === 0,
     }, {
       title: 'Номер телефона',
       dataIndex: 'phone',
@@ -47,20 +68,21 @@ class EmployeeListPage extends React.Component {
       minWidth: '200px',
     }];
 
-  const pagination = { position: 'none' }
     return ( 
       <div className="ClientEdit" >
         <header>
           <h1 className='pageInfo'>Список работников</h1>
         </header>
           <body className='mainContent'>
-            <div id='clientList'>
+            <div className='clientList'>
                 <Table 
                   columns={columns}
                   dataSource={this.props.tableData}
-                  pagination={pagination}
+                  pagination={{ pageSize: 50, position: 'none'}}
+                  scroll={{ y: 600 }}
                   onRow={record => ({onClick: () => this.onRowClickHandler(record)})}
                 />
+                <Button type='primary' id='addEmployee' block>Новый работник</Button>
             </div>
           </body>  
       </div>
