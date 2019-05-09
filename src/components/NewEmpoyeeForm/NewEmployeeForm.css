@@ -1,0 +1,23 @@
+#formItems {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: flex-start;
+}
+
+#formItem {
+	margin-top: 16px;
+	width: 300px;
+}
+
+#submitButton {
+	margin-top: 16px;
+	width: 500px;
+}
+
+#checkBox {
+	position: relative;
+	padding: 80px;
+}

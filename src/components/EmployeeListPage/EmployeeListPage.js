@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { Table, Button } from 'antd'
+import { Modal, Image, Header } from 'semantic-ui-react'
 
 import './EmployeeListPage.css'
 import { setSelectedRowData } from '../../AC/table'
+import NewEmployeeForm from '../NewEmpoyeeForm/NewEmployeeForm'
 
 class EmployeeListPage extends React.Component {
   onRowClickHandler = (record) => {
@@ -82,7 +84,15 @@ class EmployeeListPage extends React.Component {
                   scroll={{ y: 600 }}
                   onRow={record => ({onClick: () => this.onRowClickHandler(record)})}
                 />
-                <Button type='primary' id='addEmployee' block>Новый работник</Button>
+                <Modal trigger={<Button type='primary' id='addEmployee' block>Новый работник</Button>} closeIcon>
+                  <Modal.Header>Новый работник</Modal.Header>
+                  <Modal.Content image>
+                      <Image wrapped size='medium' src='../employee1.png' />
+                      <Modal.Description>
+                          <NewEmployeeForm onBankAddCallback={this.onBankAddCallback}/>
+                      </Modal.Description>
+                  </Modal.Content>
+                </Modal>
             </div>
           </body>  
       </div>
