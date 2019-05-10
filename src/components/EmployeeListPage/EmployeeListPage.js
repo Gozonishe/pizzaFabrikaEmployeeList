@@ -54,17 +54,7 @@ class EmployeeListPage extends React.Component {
       }, {
         text:'cook',
         value:'cook'
-      }, {
-        text: 'archive',
-        value: 'archive',
-        children: [{
-          text: 'Yes',
-          value: 'true',
-        }, {
-          text: 'No',
-          value: 'False',
-        }],
-      }],
+      },],
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     }, {
       title: 'Номер телефона',

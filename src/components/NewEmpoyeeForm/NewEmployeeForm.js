@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Form } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import './NewEmployeeForm.css';
-// import { setLocalStorageData } from '../../helpers/localStorageUtils/setData';
 
 const options = [
   { key: 'driver', text: 'Водитель', value: 'driver'},
@@ -17,7 +16,7 @@ export default class NewEmployeeForm extends Component {
     phone: '',
     birthday: '',
     role: '',
-    isArchive: '',
+    isArchive: false,
     submittedName: '',
     submittedPhone: '',
     submittedBirthday: '',
@@ -27,19 +26,20 @@ export default class NewEmployeeForm extends Component {
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
+  handleChangeCheckbox = () => {
+    this.setState({ isArchive: !this.state.isArchive})
+  }
+  
   handleSubmit = () => {
     const { name, phone, birthday, role, isArchive } = this.state
 
-    let bank = {
+    let newEmployee = {
       name,
       phone,
       birthday,
       role,
       isArchive,
     }
-
-    // setLocalStorageData(bank, 'myBank')
-    //popup confirm
     swal({
       title: "Новый работник добавлен!",
       icon: "success",
@@ -50,7 +50,7 @@ export default class NewEmployeeForm extends Component {
         this.props.onEmployeeAddCallback()
       }
     })
-  console.log(bank) 
+  console.log(newEmployee) 
   }
   render() {
     const { name, phone, birthday, role, isArchive } = this.state
@@ -97,9 +97,10 @@ export default class NewEmployeeForm extends Component {
               id='formItem'/>
             <Form.Checkbox
               name='isArchive'
-              value={isArchive}
+              value={this.state.isArchive}
+              type='checkbox'
               label='В архиве'
-              onChange={this.handleChange} 
+              onChange={this.handleChangeCheckbox} 
               id='checkBox'/>
             <Form.Button color='blue' content='Добавить' id='submitButton'/>
           </Form.Group>

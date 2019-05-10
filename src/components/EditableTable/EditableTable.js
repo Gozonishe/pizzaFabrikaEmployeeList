@@ -42,6 +42,10 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         handleSave({ ...record, ...values });
       });
     }
+
+    handleChange(value) {
+      this.setState({role: value});
+    }
   
     render() {
       const { editing } = this.state;
@@ -125,25 +129,23 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         width: '200px',
       }, {
         title: 'Должность',
-        dataIndex: 'Condition',
-        key: 'Condition',
+        dataIndex: 'role',
+        key: 'role',
         align: 'center',
         render: v =><span>
-                      <select id="menu1" onSelect="...">
+                      <select id="menu1" onSelect="value" onChange={this.handleChange}>
                         <option value="cook">Повар</option>
                         <option value="waiter">Официант</option>
-                        <option value="driver">Водитель</option>
+                        <option value="driver" selected>Водитель</option>
                       </select>
                     </span>
       }, {
         title: 'В архиве',
-        dataIndex: 'Email',
-        key: 'Email',
+        dataIndex: 'isArchive',
+        key: 'isArchive',
         align: 'center',
         width: '200px',
-        render: v =><span>
-                      <Checkbox></Checkbox>
-                    </span>
+        render: v => v === true ? <Checkbox checked/> : <Checkbox/>
       }, {
         title: '',
         dataIndex: 'Action',
@@ -160,11 +162,12 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
   
       this.state = {
         dataSource: [{
-          key: '',
-          Name: '',
-          Condition: '',
-          Email: '',
-          Address: '',
+          id: '',
+          name: '',
+          phone: '',
+          birthday: '',
+          role: '',
+          isArchive: false,
         }],
       }
     }
@@ -189,6 +192,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         }
       )
       this.props.setTableDataFromStorage(newStorageData)
+      console.log('employee role: ' + this.props.selectedRowData[0].role)
     }
   
     render() {
