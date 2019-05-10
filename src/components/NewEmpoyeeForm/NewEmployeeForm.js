@@ -41,17 +41,17 @@ export default class NewEmployeeForm extends Component {
     // setLocalStorageData(bank, 'myBank')
     //popup confirm
     swal({
-      title: "Bank Added!",
+      title: "Новый работник добавлен!",
       icon: "success",
       button: "Ok!",
     })
     .then (isConfirm => {
       if (isConfirm) {
-        this.props.onBankAddCallback(true)
+        this.props.onEmployeeAddCallback()
       }
     })
+  console.log(bank) 
   }
-
   render() {
     const { name, phone, birthday, role, isArchive } = this.state
     return (
@@ -64,34 +64,37 @@ export default class NewEmployeeForm extends Component {
               value={name} 
               onChange={this.handleChange}
               title='Имя Фамилия'
-              pattern='([A-Z]{4})[-]{1}([A-Z]{2})[-]{1}([0-9A-Z]{2})[-]{1}([0-9A-Z]{3})' 
-              required id='formItem'/> 
+              pattern='^[А-Я]{1}[а-я]{1,14} [А-Я]{1}[а-я]{1,14}$' 
+              required 
+              id='formItem'/> 
             <Form.Input 
               placeholder='Телефон' 
               name='phone'
               value={phone} 
               onChange={this.handleChange} 
               type='text'
-              maxLength='14' 
               required
-              title='AAAA-AA-AA-AAA'
-              pattern='([A-Z]{4})[-]{1}([A-Z]{2})[-]{1}([0-9A-Z]{2})[-]{1}([0-9A-Z]{3})' id='formItem'/>
+              title='+7 (999) 999-9999'
+              pattern='^\+[0-9]{1} \([0-9]{3}\) [0-9]{3}[-]{1}[0-9]{4}$' 
+              id='formItem'/>
             <Form.Input 
               placeholder='Дата рождения' 
               name='birthday'
               type='text'
-              maxLength='12' 
               value={birthday} 
               onChange={this.handleChange}
-              title='AAAA-AA-AA-AAA'
-              pattern='([A-Z]{4})[-]{1}([A-Z]{2})[-]{1}([0-9A-Z]{2})[-]{1}([0-9A-Z]{3})' 
-              required id='formItem'/>
+              title='11.11.1111'
+              pattern='([0-9]{2})[.]([0-9]{2})[.]([0-9]{4})' 
+              required 
+              id='formItem'/>
             <Form.Select
               placeholder='Должность'
               name='role'
               options={options}
+              selected='driver'
               onChange={this.handleChange} 
-              required id='formItem'/>
+              required 
+              id='formItem'/>
             <Form.Checkbox
               name='isArchive'
               value={isArchive}

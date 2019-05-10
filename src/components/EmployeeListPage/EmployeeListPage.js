@@ -15,6 +15,11 @@ class EmployeeListPage extends React.Component {
     this.props.setSelectedRowData(record)
   }
 
+  onEmployeeAddCallback = () => {
+    console.log('hi');
+    
+  }
+
   render() {
     if (!this.props.tableData) {
       return null
@@ -89,7 +94,7 @@ class EmployeeListPage extends React.Component {
                   <Modal.Content image>
                       <Image wrapped size='medium' src='../employee1.png' />
                       <Modal.Description>
-                          <NewEmployeeForm onBankAddCallback={this.onBankAddCallback}/>
+                          <NewEmployeeForm onEmployeeAddCallback={this.onEmployeeAddCallback}/>
                       </Modal.Description>
                   </Modal.Content>
                 </Modal>
