@@ -6,7 +6,7 @@ import { Table, Button } from 'antd'
 import { Modal, Image, Header } from 'semantic-ui-react'
 
 import './EmployeeListPage.css'
-import { setSelectedRowData } from '../../AC/table'
+import { setSelectedRowData, addDataToTheStorage } from '../../AC/table'
 import NewEmployeeForm from '../NewEmpoyeeForm/NewEmployeeForm'
 
 class EmployeeListPage extends React.Component {
@@ -15,9 +15,10 @@ class EmployeeListPage extends React.Component {
     this.props.setSelectedRowData(record)
   }
 
-  onEmployeeAddCallback = () => {
-    console.log('hi');
-    
+  onEmployeeAddCallback = (newEmployeeData) => {
+    const lastUniqId = this.props.tableData.map(d=> d.id).sort((a,b)=>a-b).slice(-1)
+    newEmployeeData.id = 1 + lastUniqId // todo: fix types
+    this.props.addDataToTheStorage(newEmployeeData)
   }
 
   render() {
@@ -73,6 +74,7 @@ class EmployeeListPage extends React.Component {
           <body className='mainContent'>
             <div className='clientList'>
                 <Table 
+                  rowKey={record => record.id}
                   columns={columns}
                   dataSource={this.props.tableData}
                   pagination={{ pageSize: 50, position: 'none'}}
@@ -98,4 +100,4 @@ export default connect((state) => {
   return {
     tableData: state.storage.storageData,
   }
-}, {setSelectedRowData}) (EmployeeListPage)
+}, {setSelectedRowData, addDataToTheStorage}) (EmployeeListPage)

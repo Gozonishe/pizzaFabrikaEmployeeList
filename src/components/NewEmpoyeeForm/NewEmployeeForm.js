@@ -47,10 +47,10 @@ export default class NewEmployeeForm extends Component {
     })
     .then (isConfirm => {
       if (isConfirm) {
-        this.props.onEmployeeAddCallback()
+        this.props.onEmployeeAddCallback(newEmployee)
       }
     })
-  console.log(newEmployee) 
+  // console.log(newEmployee) 
   }
   render() {
     const { name, phone, birthday, role, isArchive } = this.state

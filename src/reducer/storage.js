@@ -1,4 +1,4 @@
-import { SET_TABLE_DATA_FROM_STORAGE } from '../constants'
+import { SET_TABLE_DATA_FROM_STORAGE, ADD_DATA_TO_THE_STORAGE } from '../constants'
 
 const defaultState = {
   storageData: undefined
@@ -11,6 +11,12 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         storageData: payload.data
+      }
+    case ADD_DATA_TO_THE_STORAGE:
+      console.log(payload)
+      return {
+        ...state,
+        storageData: [...state.storageData, payload.data]
       }
     default:
   }
