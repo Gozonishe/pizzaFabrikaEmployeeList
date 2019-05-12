@@ -10,7 +10,6 @@ const options = [
 ]
 
 export default class NewEmployeeForm extends Component {
-  
   state = {
     name: '',
     phone: '',
@@ -32,8 +31,6 @@ export default class NewEmployeeForm extends Component {
 
   changeModalState = () => {
     this.setState({ modalState: !this.state.modalState })
-    console.log('modal opened(closed)');
-    
   }
   
   handleSubmit = () => {
@@ -57,7 +54,7 @@ export default class NewEmployeeForm extends Component {
         this.props.changeModalState()
       }
     })
-  // console.log(newEmployee) 
+  console.log(newEmployee) 
   }
   render() {
     const { name, phone, birthday, } = this.state

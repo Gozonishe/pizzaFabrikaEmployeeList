@@ -14,7 +14,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
     <EditableContext.Provider value={form} >
       <tr {...props} />
     </EditableContext.Provider>
-  );
+  )
   
   const EditableFormRow = Form.create()(EditableRow);
   
@@ -97,7 +97,11 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
   
   class EditableTable extends React.Component {
     constructor(props) {
-      super(props);
+      super(props)
+      this.state = {
+        role: undefined,
+        isArchive: false,
+      }
       this.columns = [{
         title: '№',
         dataIndex: 'id',
@@ -129,7 +133,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         key: 'role',
         align: 'center',
         render: v => <span>
-                      <select id="menu1" onChange={this.handleCheck}>
+                      <select id="menu1" onChange={this.handleRoleChange}>
                         <option selected={v === "cook" ? true: false} value="cook">Повар</option>
                         <option selected={v === "waiter" ? true: false}  value="waiter">Официант</option>
                         <option selected={v === "driver" ? true: false}  value="driver">Водитель</option>
@@ -141,7 +145,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         key: 'isArchive',
         align: 'center',
         width: '200px',
-        render: v => v === true ? <Checkbox checked/> : <Checkbox/>
+        render: v => v === true ? <Checkbox defaultChecked={true}/> : <Checkbox onChange={this.handleIsArchiveChange}/>
       }, {
         title: '',
         dataIndex: 'Action',
@@ -149,15 +153,15 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         render: v => <Button onClick = {this.handleSave}>
                        <Link to = '/'>Сохранить</Link>
                      </Button>
-      }];
-  
-      this.state = {
-        role: undefined,
-      }
+      }]
     }
  
-    handleCheck = (e) => {
+    handleRoleChange = (e) => {
       this.setState({ role: e.target.value })     
+    }
+
+    handleIsArchiveChange = () => {
+      this.setState({ isArchive: !this.state.isArchive })          
     }
 
     handleSave = (row) => {
@@ -165,6 +169,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
       const index = newData.findIndex(item => row.key === item.key);
       const item = newData[index];
       item.role = this.state.role
+      item.isArchive = this.state.isArchive
       newData.splice(index, 1, {
         ...item,
         ...row,
@@ -181,7 +186,6 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         }
       )
       this.props.setTableDataFromStorage(newStorageData)
-      console.log('employee role: ' + this.state.role)
     }
   
     render() {
@@ -212,6 +216,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
       return (
         <div>
           <Table
+            rowKey={record => record.id}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
