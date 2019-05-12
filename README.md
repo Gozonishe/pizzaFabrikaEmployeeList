@@ -1,3 +1,3 @@
 PizzaFab employee list
 
-Build WIth React JS + Redux + Ant Design Components + Semantic Design UI
+Build With React JS + Redux + Ant UI Design + Semantic UI Design Components
