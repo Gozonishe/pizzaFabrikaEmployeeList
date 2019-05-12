@@ -3,13 +3,17 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { Table, Button } from 'antd'
-import { Modal, Image, Header } from 'semantic-ui-react'
+import { Modal, Image } from 'semantic-ui-react'
 
 import './EmployeeListPage.css'
 import { setSelectedRowData, addDataToTheStorage } from '../../AC/table'
 import NewEmployeeForm from '../NewEmpoyeeForm/NewEmployeeForm'
 
 class EmployeeListPage extends React.Component {
+  state = {
+    modalState: false,
+  }
+
   onRowClickHandler = (record) => {
     console.log('selected_row: ', record)
     this.props.setSelectedRowData(record)
@@ -17,14 +21,18 @@ class EmployeeListPage extends React.Component {
 
   onEmployeeAddCallback = (newEmployeeData) => {
     const lastUniqId = this.props.tableData.map(d=> d.id).sort((a,b)=>a-b).slice(-1)
-    newEmployeeData.id = 1 + lastUniqId // todo: fix types
+    newEmployeeData.id = parseInt(lastUniqId) + 1 
     this.props.addDataToTheStorage(newEmployeeData)
   }
 
+  changeModalState = () => {
+    this.setState({ modalState: !this.state.modalState })
+  }
+  
   render() {
     if (!this.props.tableData) {
       return null
-    }
+  }
 
     const columns = [{
       title: '№',
@@ -81,12 +89,12 @@ class EmployeeListPage extends React.Component {
                   scroll={{ y: 600 }}
                   onRow={record => ({onClick: () => this.onRowClickHandler(record)})}
                 />
-                <Modal trigger={<Button type='primary' id='addEmployee' block>Новый работник</Button>} closeIcon>
+                <Modal open={this.state.modalState} trigger={<Button type='primary' id='addEmployee' onClick={this.changeModalState} block>Новый работник</Button>}>
                   <Modal.Header>Новый работник</Modal.Header>
                   <Modal.Content image>
                       <Image wrapped size='medium' src='../employee1.png' />
                       <Modal.Description>
-                          <NewEmployeeForm onEmployeeAddCallback={this.onEmployeeAddCallback}/>
+                          <NewEmployeeForm onEmployeeAddCallback={this.onEmployeeAddCallback} changeModalState={this.changeModalState}/>
                       </Modal.Description>
                   </Modal.Content>
                 </Modal>

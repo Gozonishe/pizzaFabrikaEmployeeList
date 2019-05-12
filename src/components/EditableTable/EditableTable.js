@@ -43,8 +43,8 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
       });
     }
 
-    handleChange(value) {
-      this.setState({role: value});
+    handleChange() {
+      this.setState({role: '222222222222222222222222222'})
     }
   
     render() {

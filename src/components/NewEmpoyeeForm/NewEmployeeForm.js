@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Form } from 'semantic-ui-react';
-import swal from 'sweetalert';
-import './NewEmployeeForm.css';
+import React, { Component } from 'react'
+import { Form } from 'semantic-ui-react'
+import swal from 'sweetalert'
+import './NewEmployeeForm.css'
 
 const options = [
   { key: 'driver', text: 'Водитель', value: 'driver'},
@@ -29,6 +29,12 @@ export default class NewEmployeeForm extends Component {
   handleChangeCheckbox = () => {
     this.setState({ isArchive: !this.state.isArchive})
   }
+
+  changeModalState = () => {
+    this.setState({ modalState: !this.state.modalState })
+    console.log('modal opened(closed)');
+    
+  }
   
   handleSubmit = () => {
     const { name, phone, birthday, role, isArchive } = this.state
@@ -48,12 +54,13 @@ export default class NewEmployeeForm extends Component {
     .then (isConfirm => {
       if (isConfirm) {
         this.props.onEmployeeAddCallback(newEmployee)
+        this.props.changeModalState()
       }
     })
   // console.log(newEmployee) 
   }
   render() {
-    const { name, phone, birthday, role, isArchive } = this.state
+    const { name, phone, birthday, role, isArchive, } = this.state
     return (
       <div className='newForm'>
         <Form onSubmit={this.handleSubmit} >
@@ -97,12 +104,12 @@ export default class NewEmployeeForm extends Component {
               id='formItem'/>
             <Form.Checkbox
               name='isArchive'
-              value={this.state.isArchive}
               type='checkbox'
               label='В архиве'
               onChange={this.handleChangeCheckbox} 
               id='checkBox'/>
             <Form.Button color='blue' content='Добавить' id='submitButton'/>
+            <Form.Button color='red' content='Отменить' onClick = {() => {this.props.changeModalState()}} id='submitButton'/>
           </Form.Group>
         </Form>
       </div>
