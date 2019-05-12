@@ -27,6 +27,6 @@ class EmployeeEditPage extends Component {
 
 export default connect((state) => {
   return {
-    selectedRowData: state.table.selectedRowData,
+    selectedRowData: state.table.selectedRowData
   }
 })(EmployeeEditPage)

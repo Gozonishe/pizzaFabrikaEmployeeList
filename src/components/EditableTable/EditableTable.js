@@ -11,7 +11,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
   const EditableContext = React.createContext()
   
   const EditableRow = ({ form, index, ...props }) => (
-    <EditableContext.Provider value={form}>
+    <EditableContext.Provider value={form} >
       <tr {...props} />
     </EditableContext.Provider>
   );
@@ -41,10 +41,6 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         this.toggleEdit();
         handleSave({ ...record, ...values });
       });
-    }
-
-    handleChange() {
-      this.setState({role: '222222222222222222222222222'})
     }
   
     render() {
@@ -133,7 +129,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         key: 'role',
         align: 'center',
         render: v => <span>
-                      <select id="menu1" onSelect="value" onChange={this.handleChange}>
+                      <select id="menu1" onChange={this.handleCheck}>
                         <option selected={v === "cook" ? true: false} value="cook">Повар</option>
                         <option selected={v === "waiter" ? true: false}  value="waiter">Официант</option>
                         <option selected={v === "driver" ? true: false}  value="driver">Водитель</option>
@@ -150,32 +146,25 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         title: '',
         dataIndex: 'Action',
         align: 'center',
-        render: (text, record) => (
-          this.state.dataSource.length >= 1
-            ? (
-              <Button onClick = {this.handleSave}>
-              <Link to = '/'>Сохранить</Link>
-              </Button>
-            ) : null
-        ),
+        render: v => <Button onClick = {this.handleSave}>
+                       <Link to = '/'>Сохранить</Link>
+                     </Button>
       }];
   
       this.state = {
-        dataSource: [{
-          id: '',
-          name: '',
-          phone: '',
-          birthday: '',
-          role: '',
-          isArchive: false,
-        }],
+        role: undefined,
       }
     }
  
+    handleCheck = (e) => {
+      this.setState({ role: e.target.value })     
+    }
+
     handleSave = (row) => {
       const newData = [...this.props.selectedRowData];
       const index = newData.findIndex(item => row.key === item.key);
       const item = newData[index];
+      item.role = this.state.role
       newData.splice(index, 1, {
         ...item,
         ...row,
@@ -192,7 +181,7 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         }
       )
       this.props.setTableDataFromStorage(newStorageData)
-      console.log('employee role: ' + this.props.selectedRowData[0].role)
+      console.log('employee role: ' + this.state.role)
     }
   
     render() {
