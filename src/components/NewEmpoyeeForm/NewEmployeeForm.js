@@ -60,7 +60,7 @@ export default class NewEmployeeForm extends Component {
   // console.log(newEmployee) 
   }
   render() {
-    const { name, phone, birthday, role, isArchive, } = this.state
+    const { name, phone, birthday, } = this.state
     return (
       <div className='newForm'>
         <Form onSubmit={this.handleSubmit} >

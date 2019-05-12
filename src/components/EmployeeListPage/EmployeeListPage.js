@@ -54,14 +54,23 @@ class EmployeeListPage extends React.Component {
       dataIndex: 'role',
       key: 'role',
       align: 'center',
+      render: v => { 
+        if (v === 'driver') {
+          return <span>Водитель</span>
+        } else if (v === 'cook') {
+          return <span>Повар</span>
+        } else {
+          return <span>Официант</span>
+        }
+    },
       filters:[{
-        text:'driver',
+        text:'Водитель',
         value:'driver'
       }, {
-        text:'waiter',
+        text:'Официант',
         value:'waiter'
       }, {
-        text:'cook',
+        text:'Повар',
         value:'cook'
       },],
       onFilter: (value, record) => record.role.indexOf(value) === 0,
