@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
 import swal from 'sweetalert'
+
 import './NewEmployeeForm.css'
+import InputMask from 'react-input-mask'
+import {IMaskInput} from 'react-imask'
 
 const options = [
   { key: 'driver', text: 'Водитель', value: 'driver'},
@@ -62,7 +65,7 @@ export default class NewEmployeeForm extends Component {
       <div className='newForm'>
         <Form onSubmit={this.handleSubmit} >
           <Form.Group id='formItems'>
-            <Form.Input 
+            <Form.Input
               placeholder='Имя' 
               name='name' 
               value={name} 
@@ -76,7 +79,7 @@ export default class NewEmployeeForm extends Component {
               name='phone'
               value={phone} 
               onChange={this.handleChange} 
-              type='text'
+              type='tel'
               required
               title='+7 (999) 999-9999'
               pattern='^\+[0-9]{1} \([0-9]{3}\) [0-9]{3}[-]{1}[0-9]{4}$' 
@@ -84,11 +87,11 @@ export default class NewEmployeeForm extends Component {
             <Form.Input 
               placeholder='Дата рождения' 
               name='birthday'
-              type='text'
+              type='date'
               value={birthday} 
               onChange={this.handleChange}
-              title='11.11.1111'
-              pattern='([0-9]{2})[.]([0-9]{2})[.]([0-9]{4})' 
+              title='Дата'
+              // pattern='([0-9]{2})[.]([0-9]{2})[.]([0-9]{4})' 
               required 
               id='formItem'/>
             <Form.Select

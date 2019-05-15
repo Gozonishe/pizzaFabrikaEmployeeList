@@ -133,10 +133,10 @@ import { setSelectedRowData, setTableDataFromStorage } from '../../AC/table'
         key: 'role',
         align: 'center',
         render: v => <span>
-                      <select id="menu1" onChange={this.handleRoleChange}>
-                        <option selected={v === "cook" ? true: false} value="cook">Повар</option>
-                        <option selected={v === "waiter" ? true: false}  value="waiter">Официант</option>
-                        <option selected={v === "driver" ? true: false}  value="driver">Водитель</option>
+                      <select id="menu1" defaultValue={this.props.selectedRowData[0].role} onChange={this.handleRoleChange}>
+                        <option value="cook">Повар</option>
+                        <option value="waiter">Официант</option>
+                        <option value="driver">Водитель</option>
                       </select>
                     </span>
       }, {

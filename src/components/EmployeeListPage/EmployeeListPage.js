@@ -88,27 +88,25 @@ class EmployeeListPage extends React.Component {
         <header>
           <h1 className='pageInfo'>Список работников</h1>
         </header>
-          <body className='mainContent'>
-            <div className='clientList'>
-                <Table 
-                  rowKey={record => record.id}
-                  columns={columns}
-                  dataSource={this.props.tableData}
-                  pagination={{ pageSize: 50, position: 'none'}}
-                  scroll={{ y: 600 }}
-                  onRow={record => ({onClick: () => this.onRowClickHandler(record)})}
-                />
-                <Modal open={this.state.modalState} trigger={<Button type='primary' id='addEmployee' onClick={this.changeModalState} block>Новый работник</Button>}>
-                  <Modal.Header>Новый работник</Modal.Header>
-                  <Modal.Content image>
-                      <Image wrapped size='medium' src='../employee1.png' />
-                      <Modal.Description>
-                          <NewEmployeeForm onEmployeeAddCallback={this.onEmployeeAddCallback} changeModalState={this.changeModalState}/>
-                      </Modal.Description>
-                  </Modal.Content>
-                </Modal>
-            </div>
-          </body>  
+          <div className='clientList'>
+              <Table 
+                rowKey={record => record.id}
+                columns={columns}
+                dataSource={this.props.tableData}
+                pagination={{ pageSize: 50, position: 'none'}}
+                scroll={{ y: 600 }}
+                onRow={record => ({onClick: () => this.onRowClickHandler(record)})}
+              />
+              <Modal open={this.state.modalState} trigger={<Button type='primary' id='addEmployee' onClick={this.changeModalState} block>Новый работник</Button>}>
+                <Modal.Header>Новый работник</Modal.Header>
+                <Modal.Content image>
+                    <Image wrapped size='medium' src='../employee1.png' />
+                    <Modal.Description>
+                        <NewEmployeeForm onEmployeeAddCallback={this.onEmployeeAddCallback} changeModalState={this.changeModalState}/>
+                    </Modal.Description>
+                </Modal.Content>
+              </Modal>
+          </div>
       </div>
     );
   }
