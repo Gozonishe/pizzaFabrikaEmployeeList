@@ -4,7 +4,6 @@ import swal from 'sweetalert'
 
 import './NewEmployeeForm.css'
 import InputMask from 'react-input-mask'
-import {IMaskInput} from 'react-imask'
 
 const options = [
   { key: 'driver', text: 'Водитель', value: 'driver'},
@@ -27,6 +26,10 @@ export default class NewEmployeeForm extends Component {
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  handleChangePhone = e => {
+    this.setState({ phone: e.target.value })
+  }
 
   handleChangeCheckbox = () => {
     this.setState({ isArchive: !this.state.isArchive})
@@ -74,23 +77,25 @@ export default class NewEmployeeForm extends Component {
               pattern='^[А-Я]{1}[а-я]{1,14} [А-Я]{1}[а-я]{1,14}$' 
               required 
               id='formItem'/> 
-            <Form.Input 
-              placeholder='Телефон' 
-              name='phone'
-              value={phone} 
-              onChange={this.handleChange} 
-              type='tel'
-              required
-              title='+7 (999) 999-9999'
-              pattern='^\+[0-9]{1} \([0-9]{3}\) [0-9]{3}[-]{1}[0-9]{4}$' 
-              id='formItem'/>
+            <Form.Input>        
+              <InputMask
+                {...this.props}
+                placeholder='Телефон' 
+                name='phone'
+                id='formItem'
+                onChange={this.handleChangePhone}
+                value={phone}
+                mask="+7\ (999) 999-9999"
+                maskChar="_"
+              />
+            </Form.Input> 
             <Form.Input 
               placeholder='Дата рождения' 
               name='birthday'
               type='date'
               value={birthday} 
               onChange={this.handleChange}
-              title='Дата'
+              title='Дата рождения'
               // pattern='([0-9]{2})[.]([0-9]{2})[.]([0-9]{4})' 
               required 
               id='formItem'/>
