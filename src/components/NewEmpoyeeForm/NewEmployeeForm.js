@@ -31,6 +31,10 @@ export default class NewEmployeeForm extends Component {
     this.setState({ phone: e.target.value })
   }
 
+  handleChangeBirthday = e => {
+    this.setState({ birthday: e.target.value })
+  }
+
   handleChangeCheckbox = () => {
     this.setState({ isArchive: !this.state.isArchive})
   }
@@ -89,16 +93,19 @@ export default class NewEmployeeForm extends Component {
                 maskChar="_"
               />
             </Form.Input> 
-            <Form.Input 
-              placeholder='Дата рождения' 
-              name='birthday'
-              type='date'
-              value={birthday} 
-              onChange={this.handleChange}
-              title='Дата рождения'
-              // pattern='([0-9]{2})[.]([0-9]{2})[.]([0-9]{4})' 
-              required 
-              id='formItem'/>
+            <Form.Input>
+              <InputMask
+                {...this.props}
+                title='Дата рождения'
+                placeholder='Дата рождения' 
+                name='birthday'
+                id='formItem'
+                onChange={this.handleChangeBirthday}
+                value={birthday}
+                mask="99.99.9999"
+                maskChar="_"
+              />
+            </Form.Input> 
             <Form.Select
               placeholder='Должность'
               name='role'
